@@ -17,7 +17,7 @@ namespace DevelopmentWithADot.LinqExpressionInterceptor
 		private static readonly MethodInfo orderByDescendingMethod = typeof(Queryable).GetMethods(BindingFlags.Public | BindingFlags.Static).Where(x => x.Name == "OrderByDescending").First();
 		private static readonly MethodInfo thenByMethod = typeof(Queryable).GetMethods(BindingFlags.Public | BindingFlags.Static).Where(x => x.Name == "ThenBy").First();
 		private static readonly MethodInfo thenByDescendingMethod = typeof(Queryable).GetMethods(BindingFlags.Public | BindingFlags.Static).Where(x => x.Name == "ThenByDescending").First();
-	
+
 		public static Boolean IsInsideWhere(this IContextfulVisitor visitor)
 		{
 			return (visitor.Stack.OfType<MethodCallExpression>().Any(x => x.IsWhere() == true));

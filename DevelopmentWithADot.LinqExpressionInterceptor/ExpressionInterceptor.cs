@@ -38,6 +38,8 @@ namespace DevelopmentWithADot.LinqExpressionInterceptor
 
 	public sealed class ExpressionInterceptor : ExpressionVisitor, IDisposable, IContextfulVisitor
 	{
+		private static readonly IEnumerable<Type> ExpressionTypes = typeof(Expression).Assembly.GetExportedTypes().Where(x => typeof(Expression).IsAssignableFrom(x)).OrderBy(x => x.Name).ToList();
+
 		private sealed class Enqueuer : IDisposable
 		{
 			private readonly Stack<Expression> stack;
@@ -298,7 +300,7 @@ namespace DevelopmentWithADot.LinqExpressionInterceptor
 				}
 			}
 		}
-				 
+
 		protected override Expression VisitLambda<T>(Expression<T> expression)
 		{
 			using (this.Enqueue(expression))
@@ -586,8 +588,8 @@ namespace DevelopmentWithADot.LinqExpressionInterceptor
 				return (base.VisitMemberAssignment(node));
 			}
 		}
-		#endregion		
-	
+		#endregion
+
 		#region IContextfulVisitor Members
 		public override Expression Visit(Expression expression)
 		{
